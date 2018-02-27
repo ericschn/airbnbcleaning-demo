@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Edit Cleaning</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous"/>
+</head>
+<body>
+
+<div class="container">
+
+    <ul class="nav">
+        <a class="nav-link" href="/">Week</a>
+        <a class="nav-link" href="/admin">Month</a>
+        <a class="nav-link" href="/admin">Admin</a>
+        <a class="nav-link" href="/add">Add</a>
+    </ul>
+
+    <div class="container" style="max-width: 1000px">
+
+        <h1>Edit Cleaning</h1>
+        <br/>
+
+        <form class="form" method="post" th:object="${editCleaning}">
+
+            <input type="hidden"  name="${_csrf.parameterName}"   value="${_csrf.token}"/>
+
+
+            <div class="form-group row">
+                <label for="select1" class="col-2 col-form-label">
+                    Room
+                </label>
+                <div class="col-10">
+                    <select name="roomId" id="select1" class="form-control">
+                        <option th:value="${editCleaning.room.id}" th:text="${editCleaning.room.name}"></option>
+                        <option  th:each="room : ${roomList}" th:value="${room.id}" th:text="${room.name}"></option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label th:for="date" class="col-2 col-form-label">
+                    Date
+                </label>
+                <div class="col-10">
+                    <input class="form-control" type="date" th:field="*{date}"/>
+                    <div th:if="${#fields.hasErrors('date')}"><small style="color:red;">Please enter a date</small></div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label th:for="notes" class="col-2 col-form-label">
+                    Notes
+
+                    <small class="form-text text-muted">(optional)</small></label>
+                <div class="col-10">
+                    <input class="form-control" th:field="*{notes}" aria-describedby="notesHelp"/>
+                    <small id="notesHelp" class="form-text text-muted">e.g. Clean before 11am</small>
+                </div>
+            </div>
+            <br/>
+            <input type="hidden" name="id" th:value="${editCleaning.id}"/>
+
+            <button type="submit" class="btn btn-primary">Edit</button>
+        </form>
+
+        <br/><br/>
+
+        <form action="/delete" method="post">
+            <input type="hidden" name="id" th:value="${editCleaning.id}"/>
+            <button type="submit" class="btn btn-danger">Delete Cleaning</button>
+        </form>
+    </div>
+</div>
+
+</body>
+
+<csrf disabled="true"/>
+</html>
