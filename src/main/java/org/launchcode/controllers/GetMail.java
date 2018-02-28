@@ -81,9 +81,9 @@ public class GetMail {
 
                 // debug from address
                 System.out.println(currentMessage.getFrom()[0].toString());
-                // must be from bel propietors or brian, if not, DELETE!
-                if (!(currentMessage.getFrom()[0].toString().equals("Bel Propietors <belpropietorsllc@gmail.com>")
-                        || currentMessage.getFrom()[0].toString().equals("Brian Sheahan <brian.sheahan@outlook.com>")  )) {
+                // Only emails from these addresses will be scraped
+                if (!(currentMessage.getFrom()[0].toString().equals("Email Name <email@email.com>")
+                        || currentMessage.getFrom()[0].toString().equals("Email Name <email@email.com>")  )) {
 
                     currentMessage.setFlag(Flags.Flag.DELETED, true); // don't delete during debugging
 
